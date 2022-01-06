@@ -1,0 +1,1 @@
+export const GITHUB_PROFILE_URL = 'https://avatars.githubusercontent.com/u/54117323?s=400&u=fc2e6db866d186d0e26aba123cd1d9f5b370ca39&v=4'
