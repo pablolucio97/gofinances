@@ -9,8 +9,8 @@ interface TypeProps {
 export const Container = styled.View<TypeProps>`
   background: ${({ theme }) => theme.colors.shape};
   width: ${RFValue(300)}px;
-  padding: 18px 24px;
-  padding-bottom: ${RFValue(42)}px;
+  padding: 12px 24px;
+  padding-bottom: ${RFValue(16)}px;
   border-radius: 4px;
   margin-right: 16px;
 

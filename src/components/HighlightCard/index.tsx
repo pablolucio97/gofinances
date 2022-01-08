@@ -23,7 +23,7 @@ const icon = {
     total: 'dollar-sign'
 }
 
-export default function HihghlightCard({
+export function HihghlightCard({
     title,
     amount,
     lastTransaction,
