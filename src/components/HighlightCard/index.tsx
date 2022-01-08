@@ -10,16 +10,45 @@ import {
     Title
 } from './styles'
 
-export default function index() {
+interface Props {
+    title: string;
+    amount: string;
+    lastTransaction: string;
+    type: 'total' | 'down' | 'up';
+}
+
+const icon = {
+    up: 'arrow-up-circle',
+    down: 'arrow-down-circle',
+    total: 'dollar-sign'
+}
+
+export default function HihghlightCard({
+    title,
+    amount,
+    lastTransaction,
+    type
+
+}: Props) {
     return (
-        <Container>
-            <Header>
-                <Title>Entrada</Title>
-                <Icon name='arrow-up-circle' />
+        <Container
+            type={type}
+        >
+            <Header
+                type={type}
+            >
+                <Title type={type}>
+                    {title}
+                </Title>
+                <Icon name={icon[type]} type={type} />
             </Header>
             <Footer>
-                <Amount>R$ 17.400,00</Amount>
-                <LastTransaction>Última entrada dia 13 de abril</LastTransaction>
+                <Amount type={type}>
+                    {amount}
+                </Amount>
+                <LastTransaction type={type}>
+                    {lastTransaction}
+                </LastTransaction>
             </Footer>
         </Container>
     )

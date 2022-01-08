@@ -3,7 +3,6 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { Feather } from "@expo/vector-icons";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 
-
 export const Container = styled.View`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.background};
@@ -25,7 +24,6 @@ export const UserWrapper = styled.View`
   justify-content: space-between;
   align-items: center;
   margin-top: ${getStatusBarHeight() + RFValue(28)}px;
-
 `;
 
 export const User = styled.View`
@@ -68,4 +66,15 @@ export const HighlightCards = styled.ScrollView.attrs({
   width: 100%;
   position: absolute;
   margin-top: ${RFPercentage(32)}px;
+`;
+
+export const Transactions = styled.View`
+  flex: 1;
+  padding: 0 24px;
+  margin-top: ${RFPercentage(12)}px;
+`;
+
+export const Title = styled.Text`
+  font-size: ${RFValue(16)}px;
+  font-family: ${({ theme }) => theme.fonts.regular};
 `;
