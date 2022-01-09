@@ -28,3 +28,9 @@ export const Form = styled.View`
   padding: 16px;
   justify-content: space-between;
 `;
+
+export const TransactionsTypes = styled.View`
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+`
