@@ -2,9 +2,7 @@ import { Feather } from "@expo/vector-icons";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
-export const Container = styled.TouchableOpacity.attrs({
-  activeOpacity: 0.8,
-})`
+export const Container = styled.TouchableOpacity`
   width: 100%;
   padding: 16px;
 
