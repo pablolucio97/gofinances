@@ -6,7 +6,6 @@ import {
     Header,
     Title,
     Category,
-    CategoriesList,
     Name,
     Icon,
     Separator,

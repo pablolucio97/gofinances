@@ -35,8 +35,6 @@ import {
 interface FormDataProps {
     name: string;
     amount: string;
-    transactionType: string;
-    category: string;
 }
 
 const schema = Yup.object().shape({
@@ -70,7 +68,7 @@ export function Register() {
     function handleCloseSelectCategory() {
         setCategoryModalOpen(false)
     }
-    
+
     function handleOpenSelectCategory() {
         setCategoryModalOpen(true)
     }
@@ -87,7 +85,7 @@ export function Register() {
             name: form.name,
             amount: form.amount,
             transactionType: selectedTransactionType,
-            category: category.name
+            category: category.key
         }
 
         console.log(data)
