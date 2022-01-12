@@ -20,7 +20,8 @@ import {
     Form,
     Header,
     Title,
-    TransactionsTypes
+    TransactionsTypes,
+    SentButton
 
 } from './styles'
 import {
@@ -51,8 +52,8 @@ const schema = Yup.object().shape({
 
 export function Register() {
 
-    const { handleSubmit, control, formState: { errors } } 
-    = useForm({ resolver: yupResolver(schema) })
+    const { handleSubmit, control, formState: { errors } }
+        = useForm({ resolver: yupResolver(schema) })
 
     const [selectedTransactionType, setSelectedTransactionType] = useState('')
     const [categoryModalOpen, setCategoryModalOpen] = useState(false)
@@ -131,10 +132,12 @@ export function Register() {
                             onPress={handleOpenSelectCategory}
                         />
                     </Fields>
-                    <Button
-                        label='Enviar'
-                        onPress={handleSubmit(handleRegister)}
-                    />
+                    <SentButton>
+                        <Button
+                            label='Enviar'
+                            onPress={handleSubmit(handleRegister)}
+                        />
+                    </SentButton>
                 </Form>
                 <Modal visible={categoryModalOpen}>
                     <CategorySelect

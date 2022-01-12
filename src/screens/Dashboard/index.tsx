@@ -16,6 +16,7 @@ import {
     Transactions,
     Title,
     TransactionsList,
+    LogoutButton
 } from './styles'
 
 
@@ -76,7 +77,9 @@ export function Dashboard() {
                             <UserName>Pablo Silva</UserName>
                         </User>
                     </UserInfo>
-                    <PowerIcon name='power' />
+                    <LogoutButton onPress={() => {}}>
+                        <PowerIcon name='power' />
+                    </LogoutButton>
                 </UserWrapper>
             </Header>
             <HighlightCards

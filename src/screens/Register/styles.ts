@@ -1,5 +1,6 @@
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
+import { RectButton } from "react-native-gesture-handler";
 
 export const Container = styled.View`
   background-color: ${({ theme }) => theme.colors.background};
@@ -30,7 +31,9 @@ export const Form = styled.View`
 `;
 
 export const TransactionsTypes = styled.View`
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-`
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const SentButton = styled(RectButton)``
