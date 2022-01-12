@@ -87,8 +87,6 @@ export function Register() {
             transactionType: selectedTransactionType,
             category: category.key
         }
-
-        console.log(data)
     }
 
     return (

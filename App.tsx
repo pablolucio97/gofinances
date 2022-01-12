@@ -1,8 +1,8 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components/native';
-import { Dashboard } from './src/screens/Dashboard';
+import { NavigationContainer } from '@react-navigation/native'
 import { Register } from './src/screens/Register';
-import { CategorySelect } from './src/screens/CategorySelect';
+import { AppRoutes } from './src/routes/app.routes'
 import theme from './src/global/styles/theme'
 import AppLoading from 'expo-app-loading'
 import {
@@ -22,15 +22,17 @@ export default function App() {
     Poppins_700Bold
   })
 
-  if(!fontsLoaded){
-    return(
+  if (!fontsLoaded) {
+    return (
       <AppLoading />
     )
   }
 
   return (
     <ThemeProvider theme={theme}>
-      <Register/>
+      <NavigationContainer>
+        <AppRoutes />
+      </NavigationContainer>
     </ThemeProvider>
   );
 }
