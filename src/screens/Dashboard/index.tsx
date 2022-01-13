@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import 'intl'
+import 'intl/locale-data/jsonp/pt-BR'
+
 import { HihghlightCard } from '../../components/HighlightCard'
 import { TransactionCard, TransactionProps } from '../../components/TransactionCard'
-import { GITHUB_PROFILE_URL } from '../../utils/constants'
 import {
     Container,
     Header,
@@ -16,9 +20,10 @@ import {
     Transactions,
     Title,
     TransactionsList,
-    LogoutButton
+    LogoutButton,
 } from './styles'
 
+import { ASYNC_STORAGE_TRANSACTIONS_KEY, GITHUB_PROFILE_URL } from '../../utils/constants'
 
 export interface DataListProps extends TransactionProps {
     id: string;
@@ -26,43 +31,51 @@ export interface DataListProps extends TransactionProps {
 
 export function Dashboard() {
 
-    const data: DataListProps[] =
-        [
-            {
-                id: '1',
-                type: 'positive',
-                title: 'Desenolvimento de site',
-                category: {
-                    name: 'Vendas',
-                    icon: 'dollar-sign'
-                },
-                amount: 'R$2.400,00',
-                date: '02/02/2022'
-            },
-            {
-                id: '2',
-                type: 'negative',
-                title: 'Pizzaria',
-                category: {
-                    name: 'Alimentação',
-                    icon: 'coffee'
-                },
-                amount: 'R$90,00',
-                date: '02/02/2022'
-            },
-            {
-                id: '3',
-                type: 'positive',
-                title: 'Desenolvimento de aplicativo',
-                category: {
-                    name: 'Vendas',
-                    icon: 'dollar-sign'
-                },
-                amount: 'R$7.000,00',
-                date: '02/02/2022'
-            },
-        ]
 
+
+    const [data, setData] = useState<DataListProps[]>([])
+
+
+
+    async function loadTransactions() {
+        const response = await AsyncStorage.getItem(ASYNC_STORAGE_TRANSACTIONS_KEY)
+        const transactions = response ? JSON.parse(response) : []
+
+        const formatedTransactions: DataListProps[] = transactions.map((transaction: DataListProps) => {
+            const amount = Number(transaction.amount).toLocaleString('ptBR', {
+                style: 'currency',
+                currency: 'BRL'
+            })
+
+            const date = Intl.DateTimeFormat('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: '2-digit'
+            }).format(new Date(transaction.date))
+
+            return {
+                id: transaction.id,
+                name: transaction.name,
+                amount,
+                type: transaction.type,
+                date,
+                category: transaction.category
+            }
+
+        })
+
+
+        setData(formatedTransactions)
+    }
+
+    useEffect(() => {
+        loadTransactions()
+    }, [])
+
+
+    useFocusEffect(useCallback(() => {
+        loadTransactions()
+    }, []))
 
     return (
         <Container>
@@ -77,7 +90,7 @@ export function Dashboard() {
                             <UserName>Pablo Silva</UserName>
                         </User>
                     </UserInfo>
-                    <LogoutButton onPress={() => {}}>
+                    <LogoutButton onPress={() => { }}>
                         <PowerIcon name='power' />
                     </LogoutButton>
                 </UserWrapper>

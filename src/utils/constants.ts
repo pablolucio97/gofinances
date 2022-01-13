@@ -6,4 +6,5 @@ export const CATEGORY_INPUT_MISSING = "Selecione a categoria.";
 export const ITEM_INPUT_MISSING = "Item obrigatório";
 export const PRICE_INPUT_MISSING = "Preço obrigatório";
 export const PRICE_SHOULD_BE_POSITIVE = "Somente valores positivos são aceitos";
-
+export const ASYNC_STORAGE_ERROR_TO_SAVE = 'Não foi possível salvar os dados no dispositivo.'
+export const ASYNC_STORAGE_TRANSACTIONS_KEY = '@gofinances:transactions'
