@@ -131,13 +131,13 @@ export function Register() {
         }
     }
 
-    useEffect(() => {
+  /*   useEffect(() => {
         async function getTransactions() {
             const storedTransactions = await AsyncStorage.getItem(ASYNC_STORAGE_TRANSACTIONS_KEY)
             setTransactions(JSON.parse(storedTransactions!))
         }
         getTransactions()
-    }, [])
+    }, []) */
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

@@ -46,15 +46,16 @@ export function Dashboard() {
 
     const theme = useTheme()
 
+    const [isLoading, setIsLoading] = useState(true)
     const [trasactions, setTransactions] = useState<DataListProps[]>([])
     const [highlighData, setHighlighData] = useState<HilighDataCardProp>({} as HilighDataCardProp)
-    const [isLoading, setIsLoading] = useState(true)
 
-    let entriesTotal = 0;
-    let expansivesTotal = 0;
-
-
+   
     async function loadTransactions() {
+
+        let entriesTotal = 0;
+        let expansivesTotal = 0;n
+
         const response = await AsyncStorage.getItem(ASYNC_STORAGE_TRANSACTIONS_KEY)
         const transactions = response ? JSON.parse(response) : []
 
@@ -88,10 +89,11 @@ export function Dashboard() {
             }
 
         })
+        
+        setTransactions(formatedTransactions)
 
         const total = Number(entriesTotal - expansivesTotal)
 
-        setTransactions(formatedTransactions)
         setHighlighData({
             entries: {
                 amount: entriesTotal.toLocaleString('pt-BR', {
