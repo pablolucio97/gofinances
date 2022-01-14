@@ -7,7 +7,7 @@ import {MaterialIcons} from '@expo/vector-icons'
 
 import { Register } from '../screens/Register'
 import { Dashboard } from '../screens/Dashboard'
-import { CategorySelect } from '../screens/CategorySelect'
+import { Resume } from '../screens/Resume'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -59,7 +59,7 @@ export function AppRoutes() {
                       color={color}
                     />)
                 }}
-                component={Register} name='Resumo'
+                component={Resume} name='Resumo'
             />
         </Navigator>
     )
