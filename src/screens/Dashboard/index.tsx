@@ -34,6 +34,7 @@ export interface DataListProps extends TransactionProps {
 
 interface HighlightCardProps {
     amount: string;
+    lastTransaction: string;
 }
 
 interface HilighDataCardProp {
@@ -47,14 +48,29 @@ export function Dashboard() {
     const theme = useTheme()
 
     const [isLoading, setIsLoading] = useState(true)
-    const [trasactions, setTransactions] = useState<DataListProps[]>([])
+    const [transactions, setTransactions] = useState<DataListProps[]>([])
     const [highlighData, setHighlighData] = useState<HilighDataCardProp>({} as HilighDataCardProp)
 
-   
+
+    function getLastTransactionDate(
+        transactions: DataListProps[],
+        type: 'positive' | 'negative') {
+        const lastTransaction = Math.max.apply(Math,
+            transactions
+                .filter(transaction => transaction.type === type)
+                .map(transaction => new Date(transaction.date).getTime()))
+
+        return Intl.DateTimeFormat('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: '2-digit'
+        }).format(new Date(lastTransaction))
+    }
+
     async function loadTransactions() {
 
         let entriesTotal = 0;
-        let expansivesTotal = 0;n
+        let expansivesTotal = 0;
 
         const response = await AsyncStorage.getItem(ASYNC_STORAGE_TRANSACTIONS_KEY)
         const transactions = response ? JSON.parse(response) : []
@@ -89,31 +105,38 @@ export function Dashboard() {
             }
 
         })
-        
+
         setTransactions(formatedTransactions)
 
         const total = Number(entriesTotal - expansivesTotal)
+        const lastTransactionEntries = getLastTransactionDate(transactions, 'positive')
+        const lastTransactionExpansives = getLastTransactionDate(transactions, 'negative')
+        const intervalTransactions = `01 a ${lastTransactionExpansives}`
 
         setHighlighData({
             entries: {
                 amount: entriesTotal.toLocaleString('pt-BR', {
                     style: 'currency',
                     currency: 'BRL'
-                })
+                }),
+                lastTransaction: `Última entrada: ${lastTransactionEntries}`
             },
             expansives: {
                 amount: expansivesTotal.toLocaleString('pt-BR', {
                     style: 'currency',
                     currency: 'BRL'
-                })
+                }),
+                lastTransaction: `Última saída: ${lastTransactionExpansives}`
             },
             total: {
                 amount: total.toLocaleString('pt-BR', {
                     style: 'currency',
                     currency: 'BRL'
-                })
+                }),
+                lastTransaction: `Última saída: ${intervalTransactions}`
             },
         })
+
 
         setIsLoading(false)
 
@@ -161,19 +184,19 @@ export function Dashboard() {
                         <HihghlightCard
                             title='Entradas'
                             amount={highlighData?.entries?.amount}
-                            lastTransaction='8 de janeiro de 2022'
+                            lastTransaction={highlighData?.entries?.lastTransaction}
                             type='up'
                         />
                         <HihghlightCard
                             title='Saídas'
                             amount={highlighData?.expansives?.amount}
-                            lastTransaction='28 de fervereiro de 2021'
+                            lastTransaction={highlighData?.expansives?.lastTransaction}
                             type='down'
                         />
                         <HihghlightCard
                             title='Total'
                             amount={highlighData?.total?.amount}
-                            lastTransaction='8 de janeiro de 2021'
+                            lastTransaction={highlighData?.total?.lastTransaction}
                             type='total'
                         />
                     </HighlightCards>
@@ -181,7 +204,7 @@ export function Dashboard() {
                         <Title>Listagem</Title>
                         <TransactionsList
                             //@ts-ignore
-                            data={trasactions}
+                            data={transactions}
                             //@ts-ignore
                             keyExtractor={item => item.id}
                             //@ts-ignore
