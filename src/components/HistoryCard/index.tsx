@@ -10,6 +10,7 @@ interface HistoryCardProps{
     color: string;
     amount: string;
     title: string;
+    percent: string;
 }
 
 export function HistoryCard({color, amount, title} : HistoryCardProps) {

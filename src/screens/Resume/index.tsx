@@ -1,21 +1,26 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { View, Text, ActivityIndicator } from 'react-native'
+import { ActivityIndicator } from 'react-native'
 import { useTheme } from 'styled-components'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import 'intl'
 import 'intl/locale-data/jsonp/pt-BR'
+import { useFocusEffect } from '@react-navigation/native'
+import { VictoryPie } from 'victory-native'
+
 
 import {
     Container,
     Title,
     Header,
     Content,
-    LoadingContainer
+    LoadingContainer,
+    ChartContainer,
+    ExpensivesContainer
 } from './styles'
 import { HistoryCard } from '../../components/HistoryCard'
 import { ASYNC_STORAGE_TRANSACTIONS_KEY } from '../../utils/constants'
 import { categories } from '../../utils/categories'
-import { useFocusEffect } from '@react-navigation/native'
+import { RFValue } from 'react-native-responsive-fontsize'
 
 
 export interface TransactionData {
@@ -29,8 +34,10 @@ export interface TransactionData {
 interface CategoryData {
     name: string;
     key: string;
-    total: string;
+    total: number;
+    totalFormatted: string;
     color: string;
+    percent: string;
 }
 
 export function Resume() {
@@ -46,14 +53,17 @@ export function Resume() {
         const responseFormatted = response ? JSON.parse(response) : []
 
         try {
-            const expansives = responseFormatted.filter((expansive: TransactionData) => expansive.type === 'negative')
+            const expensives = responseFormatted.filter((expansive: TransactionData) => expansive.type === 'negative')
+            const expensiveTotalGraph = expensives.reduce((acc: number, expensive: TransactionData) => {
+                return acc + Number(expensive.amount)
+            }, 0)
 
             const totalByCategory: CategoryData[] = []
 
             categories.forEach(category => {
                 let categorySum = 0
 
-                expansives.forEach((expansive: TransactionData) => {
+                expensives.forEach((expansive: TransactionData) => {
                     if (expansive.category === category.key) {
                         categorySum += Number(expansive.amount)
                     }
@@ -65,11 +75,15 @@ export function Resume() {
                         currency: 'BRL'
                     })
 
+                    const percent = `${(categorySum / expensiveTotalGraph * 100).toFixed(0)}%`
+
                     totalByCategory.push({
                         name: category.name,
                         key: category.key,
                         color: category.color,
-                        total: totalFormatted
+                        total: categorySum,
+                        totalFormatted,
+                        percent
                     })
                 }
             })
@@ -94,29 +108,53 @@ export function Resume() {
             <Header>
                 <Title>Resumo</Title>
             </Header>
-            <Content
-            >
-                {
-                    isLoading ?
-                        <LoadingContainer>
-                            <ActivityIndicator
-                                size='large'
-                                color={theme.colors.secondary}
-                            />
-                        </LoadingContainer>
 
-                        :
+            {
+                isLoading ?
+                    <LoadingContainer>
+                        <ActivityIndicator
+                            size='large'
+                            color={theme.colors.secondary}
+                        />
+                    </LoadingContainer>
 
-                        totalByCategory.map(item => (
-                            <HistoryCard
-                                amount={item.total}
-                                key={item.key}
-                                color={item.color}
-                                title={item.name}
+                    :
+                    <Content
+                    >
+                        <ChartContainer>
+                            <VictoryPie
+                                data={totalByCategory}
+                                x='percent'
+                                y='total'
+                                colorScale={totalByCategory.map(category => category.color)}
+                                style={{
+                                    labels: {
+                                        fontSize: RFValue(16),
+                                        fill: theme.colors.shape
+                                    },
+                                    data: {
+                                        height: RFValue(80)
+                                    }
+                                }}
+                                labelRadius={72}
                             />
-                        ))
-                }
-            </Content>
+                        </ChartContainer>
+
+                        <ExpensivesContainer>
+                            {
+                                totalByCategory.map(item => (
+                                    <HistoryCard
+                                        amount={item.totalFormatted}
+                                        key={item.key}
+                                        color={item.color}
+                                        title={item.name}
+                                        percent={item.percent}
+                                    />
+                                ))
+                            }
+                        </ExpensivesContainer>
+                    </Content>
+            }
 
         </Container>
     )

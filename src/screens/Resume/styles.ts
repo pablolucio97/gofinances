@@ -36,14 +36,24 @@ export const TransactionsTypes = styled.View`
   justify-content: space-between;
 `;
 
-export const SentButton = styled(RectButton)``
+export const SentButton = styled(RectButton)``;
 
+export const Content = styled.View``;
 
-export const Content = styled.ScrollView.attrs({
-    contentContainerStyle:{flex:1, padding: 24}
-})``
+export const LoadingContainer = styled.ScrollView`
+  flex: 1;
+  justify-content: center;
+`;
 
-export const LoadingContainer = styled.View`
-    flex: 1;
-    justify-content: center;
-`
+export const ChartContainer = styled.View`
+  width: 100%;
+  align-items: center;
+`;
+
+export const ExpensivesContainer = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+})`
+  padding: 8px;
+  margin-top: -40px;
+  height: 220px;
+`;
