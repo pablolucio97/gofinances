@@ -37,3 +37,13 @@ export const TransactionsTypes = styled.View`
 `;
 
 export const SentButton = styled(RectButton)``
+
+
+export const Content = styled.ScrollView.attrs({
+    contentContainerStyle:{flex:1, padding: 24}
+})``
+
+export const LoadingContainer = styled.View`
+    flex: 1;
+    justify-content: center;
+`
