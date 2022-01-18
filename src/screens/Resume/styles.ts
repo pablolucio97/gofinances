@@ -1,6 +1,7 @@
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 import { RectButton } from "react-native-gesture-handler";
+import { Feather } from "@expo/vector-icons";
 
 export const Container = styled.View`
   background-color: ${({ theme }) => theme.colors.background};
@@ -38,9 +39,11 @@ export const TransactionsTypes = styled.View`
 
 export const SentButton = styled(RectButton)``;
 
-export const Content = styled.View``;
+export const Content = styled.View`
+  justify-content: center;
+`;
 
-export const LoadingContainer = styled.ScrollView`
+export const LoadingContainer = styled.View`
   flex: 1;
   justify-content: center;
 `;
@@ -56,4 +59,26 @@ export const ExpensivesContainer = styled.ScrollView.attrs({
   padding: 8px;
   margin-top: -40px;
   height: 220px;
+`;
+
+export const MonthSelectButton = styled.TouchableOpacity``;
+
+export const Month = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.regular};
+  font-size: ${RFValue(20)}px;
+`;
+
+export const MonthSelect = styled.View`
+  width: 100%;
+
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 24px;
+  padding-horizontal: 24px;
+`;
+
+export const MonthSelectIcon = styled(Feather)`
+  font-size: ${RFValue(24)}px;
 `;

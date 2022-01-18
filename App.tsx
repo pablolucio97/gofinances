@@ -1,7 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components/native';
 import { NavigationContainer } from '@react-navigation/native'
-import { Register } from './src/screens/Register';
 import { AppRoutes } from './src/routes/app.routes'
 import theme from './src/global/styles/theme'
 import AppLoading from 'expo-app-loading'
@@ -11,6 +10,7 @@ import {
   Poppins_700Bold,
   Poppins_500Medium
 } from '@expo-google-fonts/poppins'
+import { StatusBar } from 'react-native';
 
 
 
@@ -31,6 +31,9 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
+        <StatusBar 
+          barStyle='light-content'
+        />
         <AppRoutes />
       </NavigationContainer>
     </ThemeProvider>

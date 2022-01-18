@@ -4,8 +4,10 @@ import { useTheme } from 'styled-components'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import 'intl'
 import 'intl/locale-data/jsonp/pt-BR'
-import { useFocusEffect } from '@react-navigation/native'
 import { VictoryPie } from 'victory-native'
+import { addMonths, subMonths, format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { useFocusEffect } from '@react-navigation/native'
 
 
 import {
@@ -15,7 +17,11 @@ import {
     Content,
     LoadingContainer,
     ChartContainer,
-    ExpensivesContainer
+    ExpensivesContainer,
+    MonthSelectButton,
+    Month,
+    MonthSelect,
+    MonthSelectIcon,
 } from './styles'
 import { HistoryCard } from '../../components/HistoryCard'
 import { ASYNC_STORAGE_TRANSACTIONS_KEY } from '../../utils/constants'
@@ -46,14 +52,28 @@ export function Resume() {
 
     const [totalByCategory, setTotalByCategory] = useState<CategoryData[]>([])
     const [isLoading, setIsLoading] = useState(true)
+    const [selectedDate, setSelectedDate] = useState(new Date())
 
-
+    function handleDateChange(action: 'previous' | 'next') {
+        if (action === 'next') {
+            setSelectedDate(addMonths(selectedDate, 1))
+        } else {
+            setSelectedDate(subMonths(selectedDate, 1))
+        }
+    }
+    
+    
     async function loadData() {
+        setIsLoading(true)
         const response = await AsyncStorage.getItem(ASYNC_STORAGE_TRANSACTIONS_KEY)
         const responseFormatted = response ? JSON.parse(response) : []
 
         try {
-            const expensives = responseFormatted.filter((expansive: TransactionData) => expansive.type === 'negative')
+            const expensives = responseFormatted.filter((expansive: TransactionData) =>
+                expansive.type === 'negative' &&
+                new Date(expansive.date).getMonth() === selectedDate.getMonth() &&
+                new Date(expansive.date).getFullYear() === selectedDate.getFullYear()
+            )
             const expensiveTotalGraph = expensives.reduce((acc: number, expensive: TransactionData) => {
                 return acc + Number(expensive.amount)
             }, 0)
@@ -94,14 +114,13 @@ export function Resume() {
         }
     }
 
-    useEffect(() => {
-        loadData()
-    }, [])
 
 
-    useFocusEffect(useCallback(() => {
-        loadData()
-    }, []))
+    useFocusEffect(
+        useCallback(() => {
+            loadData()
+        }, [selectedDate]))
+
 
     return (
         <Container>
@@ -121,6 +140,20 @@ export function Resume() {
                     :
                     <Content
                     >
+
+                        <MonthSelect>
+                            <MonthSelectButton
+                                onPress={() => handleDateChange('previous')}
+                            >
+                                <MonthSelectIcon name='chevron-left' />
+                            </MonthSelectButton>
+                            <Month>{format(selectedDate, 'MMMM, yyyy', { locale: ptBR })}</Month>
+                            <MonthSelectButton
+                                onPress={() => handleDateChange('next')}
+                            >
+                                <MonthSelectIcon name='chevron-right' />
+                            </MonthSelectButton>
+                        </MonthSelect>
                         <ChartContainer>
                             <VictoryPie
                                 data={totalByCategory}
@@ -133,10 +166,10 @@ export function Resume() {
                                         fill: theme.colors.shape
                                     },
                                     data: {
-                                        height: RFValue(80)
+                                        height: RFValue(64)
                                     }
                                 }}
-                                labelRadius={72}
+                                labelRadius={80}
                             />
                         </ChartContainer>
 
