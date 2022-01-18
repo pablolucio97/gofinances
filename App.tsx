@@ -11,7 +11,7 @@ import {
   Poppins_500Medium
 } from '@expo-google-fonts/poppins'
 import { StatusBar } from 'react-native';
-
+import {SignIn} from './src/screens/SignIn'
 
 
 export default function App() {
@@ -30,12 +30,13 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
-        <StatusBar 
-          barStyle='light-content'
-        />
+      <StatusBar 
+        barStyle='light-content'
+      />
+      <SignIn />
+{/*       <NavigationContainer>
         <AppRoutes />
-      </NavigationContainer>
+      </NavigationContainer> */}
     </ThemeProvider>
   );
 }
