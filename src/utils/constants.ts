@@ -8,3 +8,5 @@ export const PRICE_INPUT_MISSING = "Preço obrigatório";
 export const PRICE_SHOULD_BE_POSITIVE = "Somente valores positivos são aceitos";
 export const ASYNC_STORAGE_ERROR_TO_SAVE = 'Não foi possível salvar os dados no dispositivo.'
 export const ASYNC_STORAGE_TRANSACTIONS_KEY = '@gofinances:transactions'
+export const GOOGLE_AUTH_ERROR = 'Não foi possível acessar a conta Google'
+export const APPLE_AUTH_ERROR = 'Não foi possível acessar a conta Apple'

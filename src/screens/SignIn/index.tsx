@@ -18,14 +18,24 @@ import LogoSvg from '../../assets/logo.svg'
 
 import {SignInSocialButton} from '../../components/SignInSocialButton'
 import {useAuth} from '../../hooks/auth'
+import { Alert } from 'react-native'
+import { GOOGLE_AUTH_ERROR } from '../../utils/constants'
 
 
 export function SignIn() {
 
-    const {user} = useAuth()
+    const {signInWithGoogle} = useAuth()
 
-    console.log(user.email)
-
+    async function handleSignInWithGoogle(){
+        try {
+           await signInWithGoogle()
+        } catch (error) {
+            console.log(error)
+            Alert.alert(GOOGLE_AUTH_ERROR)
+        }
+    }
+    
+  
     return (
         <Container>
             <Header>
@@ -49,10 +59,13 @@ export function SignIn() {
             <Footer>
                 <FooterWrapper>
                 <SignInSocialButton 
+                    activeOpacity={.8}
                     title='Entrar com Google'
                     svg={GoogleSvg}
-                />
+                    onPress={handleSignInWithGoogle}
+                    />
                 <SignInSocialButton 
+                    activeOpacity={.8}
                     title='Entrar com Apple'
                     svg={AppleSvg}
                 />
