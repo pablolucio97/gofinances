@@ -27,6 +27,7 @@ import { HistoryCard } from '../../components/HistoryCard'
 import { ASYNC_STORAGE_TRANSACTIONS_KEY } from '../../utils/constants'
 import { categories } from '../../utils/categories'
 import { RFValue } from 'react-native-responsive-fontsize'
+import {useAuth} from '../../hooks/auth'
 
 
 export interface TransactionData {
@@ -49,6 +50,7 @@ interface CategoryData {
 export function Resume() {
 
     const theme = useTheme()
+    const { userInfo } = useAuth()
 
     const [totalByCategory, setTotalByCategory] = useState<CategoryData[]>([])
     const [isLoading, setIsLoading] = useState(true)
@@ -61,11 +63,11 @@ export function Resume() {
             setSelectedDate(subMonths(selectedDate, 1))
         }
     }
-    
-    
+
+
     async function loadData() {
         setIsLoading(true)
-        const response = await AsyncStorage.getItem(ASYNC_STORAGE_TRANSACTIONS_KEY)
+        const response = await AsyncStorage.getItem(`${ASYNC_STORAGE_TRANSACTIONS_KEY}${userInfo.id}`)
         const responseFormatted = response ? JSON.parse(response) : []
 
         try {

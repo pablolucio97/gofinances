@@ -40,6 +40,7 @@ import {
     TITLE_OBLIGATORY_FILED,
     TRANSACTION_TYPE_INPUT_MISSING
 } from '../../utils/constants'
+import { useAuth } from '../../hooks/auth'
 
 interface FormDataProps {
     name: string;
@@ -61,6 +62,7 @@ const schema = Yup.object().shape({
 
 export function Register() {
 
+    const {userInfo} = useAuth()
 
     const { handleSubmit, control, reset, formState: { errors } }
         = useForm({ resolver: yupResolver(schema) })
@@ -105,15 +107,17 @@ export function Register() {
         }
 
         try {
-            const data = await AsyncStorage.getItem(ASYNC_STORAGE_TRANSACTIONS_KEY)
+            const data = await AsyncStorage.getItem(`${ASYNC_STORAGE_TRANSACTIONS_KEY}${userInfo.id}`)
             const storedTransactions = data ? JSON.parse(data) : [];
+
+            console.log(data)
 
             const formatedData = [
                 ...storedTransactions,
                 newTransaction
             ]
 
-            await AsyncStorage.setItem(ASYNC_STORAGE_TRANSACTIONS_KEY, JSON.stringify(formatedData))
+            await AsyncStorage.setItem(`${ASYNC_STORAGE_TRANSACTIONS_KEY}${userInfo.id}`, JSON.stringify(formatedData))
 
             reset()
             setSelectedTransactionType('')

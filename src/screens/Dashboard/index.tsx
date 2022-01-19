@@ -26,7 +26,7 @@ import {
   LoadingContainer
 } from './styles'
 
-import { ASYNC_STORAGE_TRANSACTIONS_KEY, GITHUB_PROFILE_URL } from '../../utils/constants'
+import { ASYNC_STORAGE_TRANSACTIONS_KEY,  } from '../../utils/constants'
 import { useAuth } from '../../hooks/auth'
 
 export interface DataListProps extends TransactionProps {
@@ -66,7 +66,7 @@ export function Dashboard() {
   }
 
   async function loadTransactions() {
-    const response = await AsyncStorage.getItem(ASYNC_STORAGE_TRANSACTIONS_KEY);
+    const response = await AsyncStorage.getItem(`${ASYNC_STORAGE_TRANSACTIONS_KEY}${userInfo.id}`);
     const transactions = response ? JSON.parse(response) : [];
 
     let entriesTotal = 0;
@@ -112,7 +112,7 @@ export function Dashboard() {
 
     const total = entriesTotal - expensiveTotal;
     const lastEntrieTransactionFormatted = entriesTotal > 0 ?
-      `Última entrada:  ${lastTransactionExpensives}` :
+      `Última entrada:  ${lastTransactionEntries}` :
       'Ainda não foram registradas entradas'
     const lastExpensiveTransactionFormatted = expensiveTotal > 0 ?
       `Última saída:  ${lastTransactionExpensives}` :

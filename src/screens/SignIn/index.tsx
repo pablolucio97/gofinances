@@ -18,7 +18,7 @@ import LogoSvg from '../../assets/logo.svg'
 
 import { SignInSocialButton } from '../../components/SignInSocialButton'
 import { useAuth } from '../../hooks/auth'
-import { ActivityIndicator, Alert } from 'react-native'
+import { ActivityIndicator, Alert, Platform } from 'react-native'
 import { APPLE_AUTH_ERROR, GOOGLE_AUTH_ERROR } from '../../utils/constants'
 import { useTheme } from 'styled-components'
 
@@ -37,7 +37,6 @@ export function SignIn() {
         } catch (error) {
             console.log(error)
             Alert.alert(GOOGLE_AUTH_ERROR)
-        } finally {
             setIsLoading(false)
         }
     }
@@ -49,7 +48,6 @@ export function SignIn() {
         } catch (error) {
             console.log(error)
             Alert.alert(APPLE_AUTH_ERROR)
-        } finally {
             setIsLoading(false)
         }
     }
@@ -83,12 +81,13 @@ export function SignIn() {
                         svg={GoogleSvg}
                         onPress={handleSignInWithGoogle}
                     />
-                    <SignInSocialButton
-                        activeOpacity={.8}
-                        title='Entrar com Apple'
-                        svg={AppleSvg}
-                        onPress={handleSignInWithApple}
-                    />
+                    {Platform.OS === 'ios' &&
+                        <SignInSocialButton
+                            activeOpacity={.8}
+                            title='Entrar com Apple'
+                            svg={AppleSvg}
+                            onPress={handleSignInWithApple}
+                        />}
                 </FooterWrapper>
                 {isLoading &&
                     <ActivityIndicator
