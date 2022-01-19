@@ -92,7 +92,7 @@ export const TransactionsList = styled(
   },
 })``;
 
-export const LogoutButton = styled(BorderlessButton)`
+export const LogoutButton = styled.TouchableOpacity`
 `
 
 export const LoadingContainer = styled.View`

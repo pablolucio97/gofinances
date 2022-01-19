@@ -18,6 +18,8 @@ interface AuthContextProps {
     userInfo: UserProps
     signInWithGoogle(): Promise<void>
     signInWithApple(): Promise<void>
+    signOut(): Promise<void>
+    isAuthenticated: boolean
 }
 
 interface ChildrenProps {
@@ -36,6 +38,7 @@ export const AuthContext = createContext({} as AuthContextProps)
 export function AuthProvider({ children }: ChildrenProps) {
 
     const [user, setUser] = useState<UserProps>({} as UserProps)
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
 
     async function signInWithGoogle() {
@@ -57,6 +60,7 @@ export function AuthProvider({ children }: ChildrenProps) {
                     photo: userInfo.picture
                 };
                 setUser(userLogged)
+                setIsAuthenticated(true)
                 await AsyncStorage.setItem(ASYNC_STORAGE_USER_AUTH_KEY, JSON.stringify(userLogged))
             }
         } catch (error) {
@@ -78,14 +82,21 @@ export function AuthProvider({ children }: ChildrenProps) {
                     id: String(credentials.user),
                     email: credentials.email!,
                     name: credentials.fullName!.givenName!,
-                    photo: undefined
+                    photo: `https://ui-avatars.com/api/?name=${credentials.fullName!.givenName!}`  
                 }
                 setUser(userLogged)
+                setIsAuthenticated(true)
                 await AsyncStorage.setItem(ASYNC_STORAGE_USER_AUTH_KEY, JSON.stringify(userLogged))
             }
         } catch (error) {
             throw new Error(String(error))
         }
+    }
+
+    async function signOut(){
+        await AsyncStorage.removeItem(ASYNC_STORAGE_USER_AUTH_KEY)
+        setUser({} as UserProps)
+        setIsAuthenticated(false)
     }
 
     useEffect(() => {
@@ -101,11 +112,16 @@ export function AuthProvider({ children }: ChildrenProps) {
         loadUserStorageData()
     }, [])
 
+
+
+
     return (
         <AuthContext.Provider value={{
             userInfo: user,
+            isAuthenticated,
             signInWithGoogle,
-            signInWithApple
+            signInWithApple,
+            signOut
         }}>
             {children}
         </AuthContext.Provider>

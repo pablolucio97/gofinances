@@ -14,6 +14,7 @@ import { StatusBar } from 'react-native';
 import { SignIn } from './src/screens/SignIn'
 import { AuthProvider } from './src/contexts/AuthContext'
 import { Routes } from './src/routes';
+import { useAuth } from './src/hooks/auth';
 
 
 export default function App() {
@@ -24,7 +25,9 @@ export default function App() {
     Poppins_700Bold
   })
 
-  if (!fontsLoaded) {
+  const {isAuthenticated} = useAuth()
+
+  if (!fontsLoaded || isAuthenticated) {
     return (
       <AppLoading />
     )

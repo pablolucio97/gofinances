@@ -1,4 +1,4 @@
-import  React from 'react'
+import React, { useState } from 'react'
 import { RFValue } from 'react-native-responsive-fontsize'
 
 import {
@@ -16,35 +16,45 @@ import AppleSvg from '../../assets/apple.svg'
 import GoogleSvg from '../../assets/google.svg'
 import LogoSvg from '../../assets/logo.svg'
 
-import {SignInSocialButton} from '../../components/SignInSocialButton'
-import {useAuth} from '../../hooks/auth'
-import { Alert } from 'react-native'
+import { SignInSocialButton } from '../../components/SignInSocialButton'
+import { useAuth } from '../../hooks/auth'
+import { ActivityIndicator, Alert } from 'react-native'
 import { APPLE_AUTH_ERROR, GOOGLE_AUTH_ERROR } from '../../utils/constants'
+import { useTheme } from 'styled-components'
 
 
 export function SignIn() {
 
-    const {signInWithGoogle,signInWithApple } = useAuth()
+    const [isLoading, setIsLoading] = useState(false)
 
-    async function handleSignInWithGoogle(){
+    const theme = useTheme()
+    const { signInWithGoogle, signInWithApple } = useAuth()
+
+    async function handleSignInWithGoogle() {
         try {
-           await signInWithGoogle()
+            setIsLoading(true)
+            return await signInWithGoogle()
         } catch (error) {
             console.log(error)
             Alert.alert(GOOGLE_AUTH_ERROR)
+        } finally {
+            setIsLoading(false)
         }
     }
 
-    async function handleSignInWithApple(){
+    async function handleSignInWithApple() {
         try {
-           await signInWithApple()
+            setIsLoading(true)
+            return await signInWithApple()
         } catch (error) {
             console.log(error)
             Alert.alert(APPLE_AUTH_ERROR)
+        } finally {
+            setIsLoading(false)
         }
     }
-    
-  
+
+
     return (
         <Container>
             <Header>
@@ -67,19 +77,25 @@ export function SignIn() {
             </Header>
             <Footer>
                 <FooterWrapper>
-                <SignInSocialButton 
-                    activeOpacity={.8}
-                    title='Entrar com Google'
-                    svg={GoogleSvg}
-                    onPress={handleSignInWithGoogle}
+                    <SignInSocialButton
+                        activeOpacity={.8}
+                        title='Entrar com Google'
+                        svg={GoogleSvg}
+                        onPress={handleSignInWithGoogle}
                     />
-                <SignInSocialButton 
-                    activeOpacity={.8}
-                    title='Entrar com Apple'
-                    svg={AppleSvg}
-                    onPress={handleSignInWithApple}
+                    <SignInSocialButton
+                        activeOpacity={.8}
+                        title='Entrar com Apple'
+                        svg={AppleSvg}
+                        onPress={handleSignInWithApple}
                     />
                 </FooterWrapper>
+                {isLoading &&
+                    <ActivityIndicator
+                        color={theme.colors.shape}
+                        size='large'
+                    />
+                }
             </Footer>
         </Container>
     )
