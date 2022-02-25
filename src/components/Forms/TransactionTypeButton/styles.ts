@@ -19,7 +19,7 @@ export const Container = styled(TouchableOpacity)<ContainerProps>`
   justify-content: center;
   border: 1px solid ${({ theme }) => theme.colors.text};
   border-radius: 4px;
-  padding: 2px 56px;
+  padding: 2px 40px;
   ${({isActive, type}) => isActive && type === 'up'  && css`
     background-color: ${({ theme }) => theme.colors.sucess_light};
     border: none;
@@ -37,7 +37,7 @@ export const Title = styled.Text`
 `;
 
 export const Icon = styled(Feather)<IconProps>`
-  font-size: ${RFValue(24)}px;
+  font-size: ${RFValue(20)}px;
   margin: 12px;
   color: ${({ theme, type }) =>
     type === "down" ? theme.colors.atention : theme.colors.sucesss};
