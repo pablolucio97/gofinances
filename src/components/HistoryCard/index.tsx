@@ -1,21 +1,23 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { ViewStyle } from 'react-native'
 import {
     Container,
     Title,
     Amount
- } from './styles'
+} from './styles'
 
-interface HistoryCardProps{
+interface Props extends ViewStyle {
     color: string;
     amount: string;
     title: string;
-    percent: string;
 }
 
-export function HistoryCard({color, amount, title} : HistoryCardProps) {
+export function HistoryCard({ color, amount, title, ...rest }: Props) {
     return (
-        <Container color={color}>
+        <Container
+            color={color}
+            {...rest}
+            >
             <Title>{title}</Title>
             <Amount>{amount}</Amount>
         </Container>

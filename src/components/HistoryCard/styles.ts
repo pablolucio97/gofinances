@@ -1,11 +1,11 @@
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
-interface ContainerProps {
+interface Props {
   color: string;
 }
 
-export const Container = styled.View<ContainerProps>`
+export const Container = styled.View<Props>`
   width: 96%;
   background-color: ${({ theme }) => theme.colors.shape};
   flex-direction: row;
