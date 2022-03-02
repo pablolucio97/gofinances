@@ -13,7 +13,7 @@ fetchMock.enableMocks();
 
 
 describe('Auth Hooks', () => {
-    it('should be able to signIn with Goggle account exisitng', async () => {
+    it('should be able to signIn with Goggle account existing', async () => {
         
         const googleMocked = mocked(startAsync as any)
 
@@ -43,6 +43,27 @@ describe('Auth Hooks', () => {
 
         console.log("USER PROFILE =>", result.current.userInfo);
         expect(result.current.userInfo.email).toBe('pablo-test@gmail.com')
+
+    })
+
+    it('should to not connect in app if user cancel authentication', async () =>{
+
+        const googleMocked = (startAsync as any)
+
+        googleMocked.mockReturnValueOnce(JSON.stringify(
+            {
+                type: 'cancel'
+            }
+        ))
+
+        const {result } = renderHook(() => useAuth(), {
+            wrapper: AuthProvider
+        })
+
+        act( async () => await result.current.signInWithGoogle())
+   
+
+        expect(result.current.userInfo).not.toHaveProperty('id')
 
     })
 })

@@ -1,4 +1,5 @@
 import React from 'react'
+import { ViewStyle } from 'react-native'
 
 import {
     Container,
@@ -10,7 +11,7 @@ import {
     Title
 } from './styles'
 
-interface Props {
+interface Props extends ViewStyle{
     title: string;
     amount: string;
     lastTransaction: string;
