@@ -37,7 +37,6 @@ export const SignInTitle = styled.Text`
 
   text-align: center;
 
-  margin-top: 80px;
   margin-bottom: 64px;
 `;
 

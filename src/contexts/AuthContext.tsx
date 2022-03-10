@@ -4,9 +4,6 @@ import * as AppleSession from 'expo-apple-authentication'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { ASYNC_STORAGE_USER_AUTH_KEY } from '../utils/constants'
 
-const {GOOGLE_CLIENT_ID} = process.env
-const {REDIRECT_URI} = process.env
-
 interface UserProps {
     id: string;
     name: string;
@@ -43,9 +40,11 @@ export function AuthProvider({ children }: ChildrenProps) {
 
     async function signInWithGoogle() {
         try {
+            const { GOOGLE_CLIENT_ID } = process.env
+            const { EXPO_REDIRECT_URL } = process.env
             const RESPONSE_TYPE = 'token';
             const SCOPE = encodeURI('profile email');
-            const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
+            const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${EXPO_REDIRECT_URL}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
 
             const { type, params } = await AuthSession.startAsync({ authUrl }) as AuthResponseProps
 
@@ -82,7 +81,7 @@ export function AuthProvider({ children }: ChildrenProps) {
                     id: String(credentials.user),
                     email: credentials.email!,
                     name: credentials.fullName!.givenName!,
-                    photo: `https://ui-avatars.com/api/?name=${credentials.fullName!.givenName!}`  
+                    photo: `https://ui-avatars.com/api/?name=${credentials.fullName!.givenName!}`
                 }
                 setUser(userLogged)
                 setIsAuthenticated(true)
@@ -93,17 +92,17 @@ export function AuthProvider({ children }: ChildrenProps) {
         }
     }
 
-    async function signOut(){
+    async function signOut() {
         await AsyncStorage.removeItem(ASYNC_STORAGE_USER_AUTH_KEY)
         setUser({} as UserProps)
         setIsAuthenticated(false)
     }
 
     useEffect(() => {
-        async function loadUserStorageData(){
+        async function loadUserStorageData() {
             const userStoraged = await AsyncStorage.getItem(ASYNC_STORAGE_USER_AUTH_KEY)
 
-            if(userStoraged){
+            if (userStoraged) {
                 const userLogged = JSON.parse(userStoraged) as UserProps
                 setUser(userLogged)
             }
