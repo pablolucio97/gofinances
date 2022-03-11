@@ -30,6 +30,9 @@ interface AuthResponseProps {
     type: string;
 }
 
+const { GOOGLE_CLIENT_ID } = process.env
+const { EXPO_REDIRECT_URL } = process.env
+
 export const AuthContext = createContext({} as AuthContextProps)
 
 export function AuthProvider({ children }: ChildrenProps) {
@@ -40,8 +43,7 @@ export function AuthProvider({ children }: ChildrenProps) {
 
     async function signInWithGoogle() {
         try {
-            const { GOOGLE_CLIENT_ID } = process.env
-            const { EXPO_REDIRECT_URL } = process.env
+          
             const RESPONSE_TYPE = 'token';
             const SCOPE = encodeURI('profile email');
             const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${EXPO_REDIRECT_URL}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
