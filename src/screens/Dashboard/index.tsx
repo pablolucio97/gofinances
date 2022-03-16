@@ -132,8 +132,11 @@ export function Dashboard() {
     const lastExpensiveTransactionFormatted = expensiveTotal > 0 ?
       `Última saída:  ${lastTransactionExpensives}` :
       'Ainda não foram registradas saídas'
-    const totalInterval = total !== 0 ? `01 a ${lastTransactionExpensives}` :
-      'Ainda não há valores para cálculo';
+    const totalInterval = total !== 0 ? 
+    lastExpensiveTransactionFormatted > lastEntrieTransactionFormatted ?
+    `01 a ${lastTransactionExpensives}` :
+    `01 a ${lastTransactionEntries}` :
+    'Ainda não há valores para cálculo' 
 
     setHighlightData({
       entries: {
