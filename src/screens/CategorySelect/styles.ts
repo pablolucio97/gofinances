@@ -42,12 +42,14 @@ export const Category = styled.Text<CategoryProps>`
 
 export const Name = styled.Text`
   font-size: ${RFValue(14)}px;
-  margin-left: 12px;
+  margin-left: 16px;
 `;
 
 export const Icon = styled(Feather)`
-  font-size: ${RFValue(14)}px;
+  font-size: ${RFValue(18)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
+  margin-right: 12px;
+  color: ${({theme}) => theme.colors.primary};
 `;
 
 export const Separator = styled.View`

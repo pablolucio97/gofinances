@@ -1,6 +1,10 @@
 import React from 'react'
-import { categories } from '../../utils/categories'
 import { ViewStyle } from 'react-native'
+import { Feather } from '@expo/vector-icons'
+import { useTheme } from 'styled-components'
+
+import { categories } from '../../utils/categories'
+
 import {
     Container,
     Title,
@@ -9,7 +13,8 @@ import {
     Date,
     Category,
     CategoryName,
-    Icon
+    Icon,
+    Button,
 } from './styles'
 
 
@@ -23,15 +28,19 @@ export interface TransactionProps {
 
 export interface Props extends ViewStyle {
     data: TransactionProps
+    deleteTransaction?: (id: unknown) => void
 }
 
 
 export function TransactionCard({
     data,
+    deleteTransaction,
     ...rest
 }: Props) {
 
     const category = categories.filter(cagetory => cagetory.key === data.category)[0]
+
+    const { colors } = useTheme()
 
     return (
         <Container {...rest}>
@@ -46,6 +55,15 @@ export function TransactionCard({
                     <CategoryName>{category.name}</CategoryName>
                 </Category>
                 <Date>{data.date}</Date>
+                <Button
+                    onPress={deleteTransaction}
+                >
+                    <Feather
+                        name='trash'
+                        size={16}
+                        color={colors.shape}
+                    />
+                </Button>
             </Footer>
         </Container>
     )

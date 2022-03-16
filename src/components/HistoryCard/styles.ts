@@ -7,6 +7,7 @@ interface Props {
 
 export const Container = styled.View<Props>`
   width: 96%;
+  height: 48px;
   background-color: ${({ theme }) => theme.colors.shape};
   flex-direction: row;
   justify-content: space-between;
@@ -19,10 +20,10 @@ export const Container = styled.View<Props>`
 
 export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
-  font-size: ${RFValue(16)}px;
+  font-size: ${RFValue(12)}px;
 `;
 
 export const Amount = styled.Text`
   font-family: ${({ theme }) => theme.fonts.bold};
-  font-size: ${RFValue(16)}px;
+  font-size: ${RFValue(12)}px;
 `;

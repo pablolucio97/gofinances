@@ -5,7 +5,7 @@ import { TouchableOpacity } from "react-native";
 export const Container = styled(TouchableOpacity)`
   width: 100%;
   padding: 16px;
-  background-color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme }) => theme.colors.primary};
   border-radius: 4px;
   justify-content: center;
   align-items: center;

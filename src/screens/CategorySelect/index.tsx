@@ -1,5 +1,5 @@
 import React from 'react'
-import {FlatList} from 'react-native'
+import { FlatList } from 'react-native'
 import { categories } from '../../utils/categories'
 import {
     Container,
@@ -44,20 +44,20 @@ export function CategorySelect({
             </Header>
             <FlatList
                 data={categories}
-                keyExtractor={(item ) => item.key}
+                keyExtractor={(item) => item.key}
                 renderItem={({ item }) => (
                     <Category
                         onPress={() => handleCategorySelect(item)}
                         isActive={category.key === item.key}
                     >
                         <Icon name={item.icon} />
-                        <Name>{item.name}</Name>
+                        <Name>  {item.name}</Name>
                     </Category>
                 )}
                 ItemSeparatorComponent={() => <Separator />}
             />
             <Footer>
-                <Button label="Selecionar" onPress={closeSelectCategory}/>
+                <Button label="Selecionar" onPress={closeSelectCategory} />
             </Footer>
         </Container>
     )

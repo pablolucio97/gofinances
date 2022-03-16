@@ -51,3 +51,11 @@ export const Icon = styled(Feather)`
   font-size: ${RFValue(16)}px;
   color: ${({ theme }) => theme.colors.text};
 `;
+
+
+export const Button = styled.TouchableOpacity`
+
+  background-color: ${({ theme }) => theme.colors.atention};
+  border-radius: 4px;
+  padding: 8px;
+`

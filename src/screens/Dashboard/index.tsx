@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import 'intl'
 import 'intl/locale-data/jsonp/pt-BR'
 import { ActivityIndicator } from 'react-native'
+import { Button } from '../../components/Forms/Button'
 
 import { HihghlightCard } from '../../components/HighlightCard'
 import { useTheme } from 'styled-components'
@@ -26,7 +27,7 @@ import {
   LoadingContainer
 } from './styles'
 
-import { ASYNC_STORAGE_TRANSACTIONS_KEY,  } from '../../utils/constants'
+import { ASYNC_STORAGE_TRANSACTIONS_KEY, } from '../../utils/constants'
 import { useAuth } from '../../hooks/auth'
 
 export interface DataListProps extends TransactionProps {
@@ -42,6 +43,15 @@ interface HighlightData {
   entries: HighlightProps;
   expensives: HighlightProps;
   total: HighlightProps;
+}
+
+interface StoredDataProps {
+  id: string
+  name: string
+  amount: string
+  type: string
+  category: string
+  date: string
 }
 
 export function Dashboard() {
@@ -104,6 +114,8 @@ export function Dashboard() {
 
       });
 
+
+
     setTransactions(transactionsFormatted);
 
     const lastTransactionEntries = getLastTransactionDate(transactions, 'positive');
@@ -149,11 +161,35 @@ export function Dashboard() {
 
   useEffect(() => {
     loadTransactions();
-  }, []);
+  }, [transactions]);
 
   useFocusEffect(useCallback(() => {
     loadTransactions();
   }, []));
+
+  async function handleDeleteTransaction(id: unknown) {
+    try {
+      const storedData = await AsyncStorage.getItem(`${ASYNC_STORAGE_TRANSACTIONS_KEY}${userInfo.id}`)
+      const storedDataFormated = storedData ? JSON.parse(storedData) : []
+
+      const updatedStoredData = storedDataFormated
+        .filter((item: StoredDataProps) => item.id !== id)
+
+      const filteredTransactions = transactions
+        .filter(item => item.id !== id)
+
+      setTransactions(filteredTransactions)
+
+      await AsyncStorage
+        .setItem(`${ASYNC_STORAGE_TRANSACTIONS_KEY}${userInfo.id}`,
+          JSON.stringify(updatedStoredData))
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
   return (
     <Container>
       {isLoading ?
@@ -169,16 +205,16 @@ export function Dashboard() {
             <UserWrapper>
               <UserInfo>
                 <Photo
-                  source={{ uri: userInfo.photo}}
+                  source={{ uri: userInfo.photo }}
                 />
                 <User>
                   <UserGreetings>Olá,</UserGreetings>
                   <UserName>{userInfo.name}</UserName>
                 </User>
               </UserInfo>
-              <LogoutButton 
-              onPress={signOut}
-              activeOpacity={.88}
+              <LogoutButton
+                onPress={signOut}
+                activeOpacity={.88}
               >
                 <PowerIcon name='power' />
               </LogoutButton>
@@ -217,6 +253,7 @@ export function Dashboard() {
               renderItem={({ item }) => (
                 <TransactionCard
                   data={item}
+                  deleteTransaction={() => handleDeleteTransaction(item.id)}
                 />
               )}
             />

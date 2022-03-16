@@ -159,19 +159,21 @@ export function Resume() {
                         <ChartContainer>
                             <VictoryPie
                                 data={totalByCategory}
+                                width={272}
+                                height={272}
                                 x='percent'
                                 y='total'
                                 colorScale={totalByCategory.map(category => category.color)}
                                 style={{
                                     labels: {
-                                        fontSize: RFValue(16),
+                                        fontSize: RFValue(12),
                                         fill: theme.colors.shape
                                     },
                                     data: {
                                         height: RFValue(64)
-                                    }
+                                    },
                                 }}
-                                labelRadius={80}
+                                labelRadius={40}
                             />
                         </ChartContainer>
 
@@ -183,7 +185,6 @@ export function Resume() {
                                         key={item.key}
                                         color={item.color}
                                         title={item.name}
-                                        percent={item.percent}
                                     />
                                 ))
                             }

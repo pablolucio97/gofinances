@@ -17,7 +17,7 @@ export const Container = styled.View<TypeProps>`
   ${(props) =>
     props.type === "total" &&
     css`
-      background: ${({ theme }) => theme.colors.secondary};
+      background: ${({ theme }) => theme.colors.title};
     `}
 `;
 
@@ -65,7 +65,7 @@ export const Footer = styled.View``;
 export const Amount = styled.Text<TypeProps>`
   font-family: ${({ theme }) => theme.fonts.medium};
   font-size: ${RFValue(32)}px;
-  color: ${({ theme }) => theme.colors.text_dark};
+  color: ${({ theme }) => theme.colors.primary};
   margin-top: 40px;
 `;
 

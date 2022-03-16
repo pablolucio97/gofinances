@@ -1,35 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import {
-    Keyboard,
-    Modal,
-    TouchableWithoutFeedback,
-    Alert,
-} from 'react-native'
-import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import uuid from 'react-native-uuid'
-
+import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigation, NavigationProp, ParamListBase } from '@react-navigation/native'
-
+import {
+    Alert, Keyboard,
+    Modal,
+    TouchableWithoutFeedback
+} from 'react-native'
+import uuid from 'react-native-uuid'
+import * as Yup from 'yup'
 import { Button } from '../../components/Forms/Button'
 import { CategorySelectButton } from '../../components/Forms/CategorySelectButton'
 import { InputForm } from '../../components/Forms/InputForm'
 import { TransactionTypeButton } from '../../components/Forms/TransactionTypeButton'
-import { CategorySelect } from '../CategorySelect'
-
-
-import {
-    Container,
-    Fields,
-    Form,
-    Header,
-    Title,
-    TransactionsTypes,
-    SentButton
-
-} from './styles'
+import { useAuth } from '../../hooks/auth'
 import {
     ASYNC_STORAGE_ERROR_TO_SAVE,
     ASYNC_STORAGE_TRANSACTIONS_KEY,
@@ -40,7 +25,18 @@ import {
     TITLE_OBLIGATORY_FILED,
     TRANSACTION_TYPE_INPUT_MISSING
 } from '../../utils/constants'
-import { useAuth } from '../../hooks/auth'
+import { CategorySelect } from '../CategorySelect'
+import {
+    Container,
+    Fields,
+    Form,
+    Header, SentButton, Title,
+    TransactionsTypes
+} from './styles'
+
+
+
+
 
 interface FormDataProps {
     name: string;
@@ -168,13 +164,13 @@ export function Register() {
                         />
                         <TransactionsTypes>
                             <TransactionTypeButton
-                                title='Income'
+                                title='Provento'
                                 type='up'
                                 isActive={selectedTransactionType === 'positive'}
                                 onPress={() => handleTransactionType('positive')}
                             />
                             <TransactionTypeButton
-                                title='Outcome'
+                                title='Despesa'
                                 type='down'
                                 isActive={selectedTransactionType === 'negative'}
                                 onPress={() => handleTransactionType('negative')}
