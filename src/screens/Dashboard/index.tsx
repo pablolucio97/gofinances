@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { useFocusEffect } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import 'intl'
 import 'intl/locale-data/jsonp/pt-BR'
@@ -24,7 +24,9 @@ import {
   Title,
   TransactionsList,
   LogoutButton,
-  LoadingContainer
+  LoadingContainer,
+  NewTransactionContainer,
+  NewTransactionText
 } from './styles'
 
 import { ASYNC_STORAGE_TRANSACTIONS_KEY, } from '../../utils/constants'
@@ -62,6 +64,7 @@ export function Dashboard() {
 
   const theme = useTheme();
   const { signOut, userInfo } = useAuth()
+  const navigation = useNavigation();
 
   function getLastTransactionDate(
     collection: DataListProps[],
@@ -221,7 +224,6 @@ export function Dashboard() {
             </UserWrapper>
           </Header>
           <HighlightCards
-
           >
             <HihghlightCard
               title='Entradas'
@@ -243,22 +245,33 @@ export function Dashboard() {
             />
           </HighlightCards>
           <Transactions>
-            <Title>Listagem</Title>
-            <TransactionsList
-              //@ts-ignore
-              data={transactions}
-              //@ts-ignore
-              keyExtractor={item => item.id}
-              //@ts-ignore
-              renderItem={({ item }) => (
-                <TransactionCard
-                  data={item}
-                  deleteTransaction={() => handleDeleteTransaction(item.id)}
+            <Title>Todas as transações</Title>
+            {transactions.length > 0 ?
+              <TransactionsList
+                //@ts-ignore
+                data={transactions}
+                //@ts-ignore
+                keyExtractor={item => item.id}
+                //@ts-ignore
+                renderItem={({ item }) => (
+                  <TransactionCard
+                    data={item}
+                    deleteTransaction={() => handleDeleteTransaction(item.id)}
+                  />
+                )}
+              />
+              :
+              <NewTransactionContainer>
+                <NewTransactionText>
+                  Você ainda não possui transações. Cadastre uma transação agora mesmo.
+                </NewTransactionText>
+                <Button
+                  label='Cadastrar nova transação'
+                  //@ts-ignore
+                  onPress={() => navigation.navigate('Cadastrar')}
                 />
-              )}
-            />
-
-
+              </NewTransactionContainer>
+            }
           </Transactions>
         </>
       }

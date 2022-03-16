@@ -1,9 +1,12 @@
 import styled from "styled-components/native";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { Feather } from "@expo/vector-icons";
-import { getBottomSpace, getStatusBarHeight } from "react-native-iphone-x-helper";
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from "react-native-iphone-x-helper";
 import { FlatList } from "react-native";
-import {BorderlessButton} from 'react-native-gesture-handler'
+import { BorderlessButton } from "react-native-gesture-handler";
 import { DataListProps } from ".";
 
 export const Container = styled.View`
@@ -88,15 +91,31 @@ export const TransactionsList = styled(
 ).attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
-    paddingBottom: getBottomSpace()
+    paddingBottom: getBottomSpace(),
   },
 })``;
 
-export const LogoutButton = styled.TouchableOpacity`
-`
+export const LogoutButton = styled.TouchableOpacity``;
 
 export const LoadingContainer = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-`
+`;
+
+export const NewTransactionContainer = styled.View`
+  flex: 1;
+  background-color: ${({ theme }) => theme.colors.secondary};
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 80px;
+  border-radius: 4px;
+  padding: 16px;
+  `;
+
+export const NewTransactionText = styled.Text`
+  color: ${({ theme }) => theme.colors.primary};
+  font-size: ${RFValue(16)}px;
+  text-align: center;
+  margin-bottom: 16px;
+`;
