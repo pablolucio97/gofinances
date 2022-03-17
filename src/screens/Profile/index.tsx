@@ -1,6 +1,7 @@
 import React from 'react';
-import { Container } from './styles';
 import { Text, TextInput, Button } from 'react-native'
+
+import { Container } from './styles';
 
 export function Profile() {
   return (

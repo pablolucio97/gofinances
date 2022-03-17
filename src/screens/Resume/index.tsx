@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { ActivityIndicator } from 'react-native'
 import { useTheme } from 'styled-components'
+import { useFocusEffect } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import 'intl'
 import 'intl/locale-data/jsonp/pt-BR'
 import { VictoryPie } from 'victory-native'
 import { addMonths, subMonths, format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { useFocusEffect } from '@react-navigation/native'
-
+import { RFValue } from 'react-native-responsive-fontsize'
 
 import {
     Container,
@@ -26,7 +26,6 @@ import {
 import { HistoryCard } from '../../components/HistoryCard'
 import { ASYNC_STORAGE_TRANSACTIONS_KEY } from '../../utils/constants'
 import { categories } from '../../utils/categories'
-import { RFValue } from 'react-native-responsive-fontsize'
 import {useAuth} from '../../hooks/auth'
 
 

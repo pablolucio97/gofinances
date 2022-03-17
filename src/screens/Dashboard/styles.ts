@@ -6,7 +6,6 @@ import {
   getStatusBarHeight,
 } from "react-native-iphone-x-helper";
 import { FlatList } from "react-native";
-import { BorderlessButton } from "react-native-gesture-handler";
 import { DataListProps } from ".";
 
 export const Container = styled.View`

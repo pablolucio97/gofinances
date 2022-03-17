@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
+import { ActivityIndicator, Alert, Platform } from 'react-native'
 import { RFValue } from 'react-native-responsive-fontsize'
+import { useTheme } from 'styled-components'
 
 import {
     Container,
@@ -18,10 +20,7 @@ import LogoSvg from '../../assets/logo.svg'
 
 import { SignInSocialButton } from '../../components/SignInSocialButton'
 import { useAuth } from '../../hooks/auth'
-import { ActivityIndicator, Alert, Platform } from 'react-native'
 import { APPLE_AUTH_ERROR, GOOGLE_AUTH_ERROR } from '../../utils/constants'
-import { useTheme } from 'styled-components'
-
 
 export function SignIn() {
 

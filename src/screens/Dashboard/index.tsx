@@ -4,10 +4,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import 'intl'
 import 'intl/locale-data/jsonp/pt-BR'
 import { ActivityIndicator } from 'react-native'
-import { Button } from '../../components/Forms/Button'
+import { useTheme } from 'styled-components'
 
 import { HihghlightCard } from '../../components/HighlightCard'
-import { useTheme } from 'styled-components'
+import { Button } from '../../components/Forms/Button'
 import { TransactionCard, TransactionProps } from '../../components/TransactionCard'
 import {
   Container,
@@ -29,8 +29,8 @@ import {
   NewTransactionText
 } from './styles'
 
-import { ASYNC_STORAGE_TRANSACTIONS_KEY, } from '../../utils/constants'
 import { useAuth } from '../../hooks/auth'
+import { ASYNC_STORAGE_TRANSACTIONS_KEY, } from '../../utils/constants'
 
 export interface DataListProps extends TransactionProps {
   id: string;
