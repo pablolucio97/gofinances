@@ -43,6 +43,11 @@ export function AuthProvider({ children }: ChildrenProps) {
 
     async function signInWithGoogle() {
         try {
+
+
+            AuthSession.makeRedirectUri({
+                useProxy: false
+            })
           
             const RESPONSE_TYPE = 'token';
             const SCOPE = encodeURI('profile email');

@@ -1,6 +1,6 @@
 {
-  "name": "GoFinancesPSD",
-  "version": "4.0.0",
+  "name": "gofinances",
+  "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "start": "expo start --dev-client",
