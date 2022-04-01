@@ -5,6 +5,11 @@
   "build": {
     "development": {
       "distribution": "internal",
+      "node" : "14.18.2",
+      "env" : {
+        "GOOGLE_CLIENT_ID" : "332955508956-d10cdtjqd7ai9blpifbdnne5ajm95e61.apps.googleusercontent.com",
+        "EXPO_REDIRECT_URL" : "https://auth.expo.io/@pablolucio/appgofinancespsd"
+      },
       "android": {
         "gradleCommand": ":app:assembleDebug"
       },
@@ -15,7 +20,13 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
+    "production": {
+      "node" : "14.18.2",
+      "env" : {
+        "GOOGLE_CLIENT_ID" : "332955508956-d10cdtjqd7ai9blpifbdnne5ajm95e61.apps.googleusercontent.com",
+        "EXPO_REDIRECT_URL" : "https://auth.expo.io/@pablolucio/appgofinancespsd"
+      }
+    }
   },
   "submit": {
     "production": {}
