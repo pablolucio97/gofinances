@@ -43,9 +43,7 @@ export function AuthProvider({ children }: ChildrenProps) {
 
     async function signInWithGoogle() {
         try {
-
-            AuthSession.makeRedirectUri()
-          
+         
             const RESPONSE_TYPE = 'token';
             const SCOPE = encodeURI('profile email');
             const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${EXPO_REDIRECT_URL}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
